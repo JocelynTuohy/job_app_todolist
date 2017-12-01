@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>To-Do Detail View: {{ todo.text }}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css"
+      href="{% static 'todolist/css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <a href="{% url 'loginreg:logout' %}">Logout</a>
+    <a href="{% url 'todolist:index' %}">Back to To-Do List</a>
+    <fieldset>
+      <legend>{{ todo.text }}</legend>
+      <p>{{ todo.details }}</p>
+      <p class="deadline">Deadline: {{ todo.deadline|date:'Y.m.d' }}</p>
+      <p>Completed? {{ todo.complete }}</p>
+      <p>To-do created on: {{ todo.created_at|date:'Y.m.d h:i a' }}</p>
+      <p>To-do updated on: {{ todo.updated_at|date:'Y.m.d h:i a' }}</p>
+      </legend>
+    </fieldset>
+  </body>
+</html>

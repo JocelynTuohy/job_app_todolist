@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>To-Do List Overview</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css"
+      href="{% static 'todolist/css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <a href="{% url 'loginreg:logout' %}">Logout</a>
+    <h1>Hello, {{ user.name }}!</h1>
+    <p>Here is your to-do list:</p>
+    <table>
+      <thead>
+        <tr>
+          <td>To-Do</td>
+          <td>Deadline</td>
+          <td>Complete</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for todo in all_todos %}
+          <tr {% if todo.deadline < today %} class="overdue" {% endif %}>
+            <td class="todo_text {% if todo.complete %} complete {% endif %}">
+              {{ todo.text }}</td>
+            <td>{{ todo.deadline|date:'Y.m.d' }}</td>
+            <td>
+              <input class="checkbox" type="checkbox" todo_id="{{ todo.id }}" {% if todo.complete %} checked {% endif %}>
+            </td>
+            <td><a href="{% url 'todolist:more' todo=todo.id %}">Details
+              </a>   <a href="{% url 'todolist:delete' todo=todo.id %}">Delete</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <form action="{% url 'todolist:add' %}" method="POST">
+      {% csrf_token %}
+      <fieldset>
+        <legend>Add To-Do</legend>
+        <p><label for="deadline">Deadline:</label>
+        <input type="date" id="deadline" name="deadline"></p>
+        <p><label for="text">To-Do:</label>
+        <input type="text" id="text" name="text"></p>
+        <p><label for="details">Details:</label>
+        <textarea id="details" name="details" placeholder="optional"></textarea></p>
+        <button type="submit">Add</button>
+      </fieldset>
+    </form>
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+  </body>
+  <script>
+      $(document).ready(function(){
+        $("input.checkbox").click(function(){
+          let this_checkbox = $(this);
+          console.log(this_checkbox);
+          $.ajax({
+            url: '/todolist/complete/' + this_checkbox.attr("todo_id"),
+            type: "POST",
+            data : {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success: (serverResponse) => {
+              // console.log("Received this from server:", serverResponse);
+              if (this_checkbox.prop('checked')){
+                this_checkbox.parent().siblings(".todo_text").addClass("complete");
+              }
+              else{
+                this_checkbox.parent().siblings(".todo_text").removeClass("complete");
+              }
+              
+            }
+          })
+        });
+      });
+  </script>
+</html>

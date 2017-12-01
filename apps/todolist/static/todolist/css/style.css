@@ -1,0 +1,19 @@
+.overdue{
+  color: red;
+}
+.complete{
+  text-decoration: line-through;
+}
+table {
+  border-collapse: collapse;
+  width: 25%;
+}
+tr, thead tr td{
+  border: solid 1px black;
+  margin: 0;
+  min-width: 40px;
+}
+form{
+  vertical-align: top;
+  width: 25%;
+}
