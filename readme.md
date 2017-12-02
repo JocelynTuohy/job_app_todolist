@@ -2,7 +2,8 @@
 
 Welcome to my to-do list demo!
 
-This project was created by me, Jocelyn Tuohy, on 12/1/2017 using Django 1.11.2. I used Python 2.7.12, but kept Python 3's requirements in mind so the code should mostly be forward-compatible. I did my work in Visual Studio Code.
+This project was created by me, Jocelyn Tuohy, on 12/1/2017 using Django 1.11.2. I used Python 2.7.12, but kept Python 3's requirements in mind so the code should mostly be forward-compatible. I did my work in Visual Studio Code. I used Django's default SQLite database for all user and to-do item data. Passwords are encrypted with bcrypt.
+
 I recommend you have Python 2.7, pip, and virtualenv installed to have the easiest time running this. Styling was kept to a minimum as the purpose of this was to demonstrate my Python abilities.
 
 In order to install the correct dependencies using pip:
